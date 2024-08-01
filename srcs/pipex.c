@@ -6,7 +6,7 @@
 /*   By: cseng-kh <cseng-kh@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 22:32:08 by cseng-kh          #+#    #+#             */
-/*   Updated: 2024/08/01 14:17:56 by cseng-kh         ###   ########.fr       */
+/*   Updated: 2024/08/01 16:14:13 by cseng-kh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,22 @@ static void	multi_execute(int n, char **cmds, int fd[2], char **paths)
 int	main(int argc, char **argv, char **envp)
 {
 	int		fd[2];
+	int		heredoc[2];
 	char	**paths;
 
 	if (argc < 4)
 		return (1);
-	fd[1] = get_outfile(argv[argc - 1]);
-	fd[0] = get_infile(argv[1]);
 	paths = get_paths(envp);
-	multi_execute(argc - 3, argv + 2, fd, paths);
+	fd[1] = get_outfile(argv[argc - 1]);
+	if (!ft_strncmp(argv[1], "here_doc", 9))
+	{
+		fd[0] = here_doc(heredoc, argv[2]);
+		multi_execute(argc - 4, argv + 3, fd, paths);
+	}
+	else
+	{
+		fd[0] = get_infile(argv[1]);
+		multi_execute(argc - 3, argv + 2, fd, paths);
+	}
 	exit(0);
 }
