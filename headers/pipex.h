@@ -6,7 +6,7 @@
 /*   By: cseng-kh <cseng-kh@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 21:10:13 by cseng-kh          #+#    #+#             */
-/*   Updated: 2024/08/01 16:15:29 by cseng-kh         ###   ########.fr       */
+/*   Updated: 2024/08/02 11:21:14 by cseng-kh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@
 
 int		get_infile(char *file);
 int		get_outfile(char *file);
+int		get_outfile_append(char *file);
 int		here_doc(int heredoc[2], char *delim);
 
 char	**get_paths(char **envp);
 char	*get_command_path(char **paths, char *cmd);
 int		check_command(char *cmd, char **paths, int is_last);
+void	multi_execute(int n, char **cmds, int fd[2], char **paths);
 
 void	exit_perror(char *s, int code);
 void	exit_error(char *s);

@@ -6,7 +6,7 @@
 /*   By: cseng-kh <cseng-kh@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 22:47:40 by cseng-kh          #+#    #+#             */
-/*   Updated: 2024/08/01 14:27:44 by cseng-kh         ###   ########.fr       */
+/*   Updated: 2024/08/02 11:21:09 by cseng-kh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,16 @@ int	get_outfile(char *file)
 	int	fd;
 
 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+		exit_perror(file, 1);
+	return (fd);
+}
+
+int	get_outfile_append(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 		exit_perror(file, 1);
 	return (fd);

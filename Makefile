@@ -19,7 +19,8 @@ LIBS		= $(LIBFT)
 IFLAGS		:= -I. $(HEADERS_INC)
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS		= -Wall -Wextra -Werror 
+# -fsanitize=address -g3
 AR			= ar -rcs
 RM			= rm -rf
 UP			= \033[1A
@@ -54,7 +55,7 @@ fclean:	clean
 run:
 	./$(NAME) $(ARGS)
 
-re: fclean $(NAME) run
+re: fclean $(NAME)
 
 push:
 	@read -p "Commit name: " commit_name; make fclean;	\

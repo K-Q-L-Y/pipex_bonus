@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   multi_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cseng-kh <cseng-kh@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 22:32:08 by cseng-kh          #+#    #+#             */
-/*   Updated: 2024/08/01 16:14:13 by cseng-kh         ###   ########.fr       */
+/*   Updated: 2024/08/02 11:43:36 by cseng-kh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	sh_execute(char *cmd)
 	perror("execve");
 }
 
-static void	multi_execute(int n, char **cmds, int fd[2], char **paths)
+void	multi_execute(int n, char **cmds, int fd[2], char **paths)
 {
 	static int	i = -1;
 	int			pipes[10][2];
@@ -92,14 +92,15 @@ int	main(int argc, char **argv, char **envp)
 	if (argc < 4)
 		return (1);
 	paths = get_paths(envp);
-	fd[1] = get_outfile(argv[argc - 1]);
 	if (!ft_strncmp(argv[1], "here_doc", 9))
 	{
+		fd[1] = get_outfile_append(argv[argc - 1]);
 		fd[0] = here_doc(heredoc, argv[2]);
 		multi_execute(argc - 4, argv + 3, fd, paths);
 	}
 	else
 	{
+		fd[1] = get_outfile(argv[argc - 1]);
 		fd[0] = get_infile(argv[1]);
 		multi_execute(argc - 3, argv + 2, fd, paths);
 	}
